@@ -18,18 +18,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['desactivar_orden_id']
 
 // Obtener órdenes según filtros
 if (!empty($busqueda)) {
-    $stmt = $conn->prepare("EXEC sp_BuscarOrdenesPorCliente ?");
-    $stmt->execute([$busqueda]);
+    $ordenes =  obtenerOrdenesPorCliente($conn, $busqueda);
 } elseif ($estado != 'todos') {
-    $stmt = $conn->prepare("EXEC sp_FiltrarOrdenesPorEstado ?");
-    $stmt->execute([$estado]);
+    $ordenes = obtenerOrdenesPorEstado($conn, $estado);
 } else {
-    $stmt = $conn->prepare("EXEC sp_ConsultarOrdenesCompletas");
-    $stmt->execute();
+    $ordenes = obtenerOrdenesCompletas($conn);
 }
-
-$ordenes = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
 
 ?>
 

@@ -224,28 +224,37 @@ function vistaFacturas($facturas) {
         echo '<td>' . htmlspecialchars($factura['nombre_admin']) . '</td>';
 
         echo '<td class="text-nowrap">';
-echo '<a href="imprimir_factura.php?id=' . $factura['id_factura'] . '" class="btn btn-sm btn-secondary me-1" target="_blank">';
-echo '<i class="bi bi-printer"></i> Imprimir';
-echo '</a>';
-echo '<button class="btn btn-sm btn-info me-1 btn-ver-factura" 
-    data-id="' . $factura['id_factura'] . '"
-    data-cliente="' . htmlspecialchars($factura['nombre_cliente']) . '"
-    data-vehiculo="' . htmlspecialchars($factura['marca'] . ' ' . $factura['modelo']) . '"
-    data-placa="' . htmlspecialchars($factura['num_placa']) . '"
-    data-monto="' . number_format($factura['monto_total'], 2) . '"
-    data-estado="' . htmlspecialchars($factura['estado_pago']) . '"
-    data-admin="' . htmlspecialchars($factura['nombre_admin']) . '"
-    data-fecha="' . date('d/m/Y', strtotime($factura['fecha_emision'])) . '">
-    <i class="bi bi-eye"></i>
-</button>';
-echo '<a href="editar_factura.php?id=' . $factura['id_factura'] . '" class="btn btn-sm btn-warning me-1">';
-echo '<i class="bi bi-pencil"></i></a>';
-echo '<form method="POST" class="form-desactivar-factura d-inline">';
-echo '<input type="hidden" name="desactivar_factura_id" value="' . $factura['id_factura'] . '">';
-echo '<button type="submit" class="btn btn-sm btn-danger">';
-echo '<i class="bi bi-trash"></i>';
-echo '</button></form>';
-echo '</td>';
+        echo '<a href="imprimir_factura.php?id=' . $factura['id_factura'] . '" class="btn btn-sm btn-secondary me-1" target="_blank">';
+        echo '<i class="bi bi-printer"></i> Imprimir';
+        echo '</a>';
+        
+        echo '<button class="btn btn-sm btn-info me-1 btn-ver-factura" 
+            data-id="' . $factura['id_factura'] . '"
+            data-cliente="' . htmlspecialchars($factura['nombre_cliente']) . '"
+            data-vehiculo="' . htmlspecialchars($factura['marca'] . ' ' . $factura['modelo']) . '"
+            data-placa="' . htmlspecialchars($factura['num_placa']) . '"
+            data-monto="' . number_format($factura['monto_total'], 2) . '"
+            data-estado="' . htmlspecialchars($factura['estado_pago']) . '"
+            data-admin="' . htmlspecialchars($factura['nombre_admin']) . '"
+            data-fecha="' . date('d/m/Y', strtotime($factura['fecha_emision'])) . '">
+            <i class="bi bi-eye"></i>
+        </button>';
+        
+        echo '<a href="editar_factura.php?id=' . $factura['id_factura'] . '" class="btn btn-sm btn-warning me-1">';
+        echo '<i class="bi bi-pencil"></i></a>';
+        
+        if ($factura['estado_pago'] === 'Pendiente') {
+            echo '<a href="agregar_pago.php?id_factura=' . $factura['id_factura'] . '" class="btn btn-sm btn-success me-1">';
+            echo '<i class="bi bi-cash-coin"></i> Pagar</a>';
+        }
+        
+        echo '<form method="POST" class="form-desactivar-factura d-inline">';
+        echo '<input type="hidden" name="desactivar_factura_id" value="' . $factura['id_factura'] . '">';
+        echo '<button type="submit" class="btn btn-sm btn-danger">';
+        echo '<i class="bi bi-trash"></i>';
+        echo '</button></form>';
+        echo '</td>';
+        
         echo '</tr>';
     }
 

@@ -92,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <label class="form-label">Monto Total</label>
                         <input type="text" class="form-control" 
                             value="₡<?= number_format($factura['monto_total'], 2) ?>" 
-                            >
+                            readonly>
                     </div>
                     
                     <div class="mb-3">
@@ -106,11 +106,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     
                     <div class="mb-3">
                         <label class="form-label">Estado de Pago</label>
-                        <select class="form-select" name="estado_pago" required>
-                            <option value="Pendiente" <?= $factura['estado_pago'] == 'Pendiente' ? 'selected' : '' ?>>Pendiente</option>
-                            <option value="Pagado" <?= $factura['estado_pago'] == 'Pagado' ? 'selected' : '' ?>>Pagado</option>
-                        </select>
+                        <input type="text" class="form-control" value="<?= htmlspecialchars($factura['estado_pago']) ?>" readonly>
                     </div>
+
                     
                     <button type="submit" class="btn btn-primary">Actualizar Factura</button>
                 </form>

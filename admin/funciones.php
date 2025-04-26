@@ -32,6 +32,22 @@ function obtenerPagosPorFactura($conn, $id_factura) {
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
+function obtenerOrdenesPorCliente($conn, $busqueda) {
+    $stmt = $conn->prepare("EXEC sp_BuscarOrdenesPorCliente ?");
+    $stmt->execute([$busqueda]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+function obtenerOrdenesPorEstado($conn, $estado) {
+    $stmt = $conn->prepare("EXEC sp_FiltrarOrdenesPorEstado ?");
+    $stmt->execute([$estado]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+function obtenerOrdenesCompletas($conn) {
+    $stmt = $conn->prepare("EXEC sp_ConsultarOrdenesCompletas");
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
 //FUNCIONES AGREGAR
 function agregarPago($conn, $id_factura, $id_persona, $fecha_pago, $monto_pagado, $metodo_pago) {
     $stmt = $conn->prepare("EXEC sp_AgregarPago ?, ?, ?, ?, ?");
